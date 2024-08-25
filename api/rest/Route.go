@@ -28,6 +28,11 @@ func StartApp() *gin.Engine {
 		{
 			PaymentsRoute.POST("/payment", middleware.VerifyAndNext, controller.PaymentgController)
 		}
+
+		UploadPhotoRoute := defaultRoute.Group("/upload")
+		{
+			UploadPhotoRoute.POST("/photo", middleware.VerifyAndNext, controller.UploadPhotoController)
+		}
 	}
 
 	return r
