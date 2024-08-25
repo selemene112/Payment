@@ -1,8 +1,11 @@
 package authservice
 
 import (
+	"errors"
 	"fmt"
+	"net/http"
 	"payment/internal/entity"
+	"payment/internal/excaption"
 	"payment/internal/helper"
 	"payment/internal/middleware"
 	"payment/internal/model/authModel"
@@ -33,7 +36,8 @@ func LoginUserService(request authModel.AuthLoginUserRequest, c *gin.Context) (a
 		go func () {
 			defer wg.Done()
 			if !middleware.CheckPasswordHash([]byte(User.Password), []byte(request.Password)) {
-				errChan <- fmt.Errorf("password not match")
+				excaption.ErrorHandler(c, http.StatusUnauthorized, errors.New("Password And Email Not Match") , "Password And Email Not Match")
+				errChan <- fmt.Errorf("Password And Email Not Match")
 				return 
 			}
 			errChan <- nil
@@ -75,8 +79,10 @@ func RegisterUserService(request authModel.AuthRegisterUserRequest, c *gin.Conte
 	if err != nil {
 		return authModel.AuthRegisterUserResponse{}, err
 	}
+	
 
 	User := entity.User{}
+	Wallet := entity.Wallet{}
 	err = config.GetPgsqlDB().Transaction(func(tx *gorm.DB) error {
 		passwordHash := middleware.Bcrypt(request.Password)
 		User = entity.User{
@@ -85,6 +91,13 @@ func RegisterUserService(request authModel.AuthRegisterUserRequest, c *gin.Conte
 			Password: passwordHash,
 		}
 		err := repository.CreateUser(&User, tx, c); if err != nil {
+			return err
+		}
+		Wallet = entity.Wallet{
+			Amount: 0,
+			UserId: User.ID,
+		}
+		err = repository.CreateWallet(&Wallet, tx, c); if err != nil {
 			return err
 		}
 		return nil

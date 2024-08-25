@@ -14,8 +14,8 @@ var (
 	DB_USER = "postgres"
 	DB_PASS = "lele123"
 	DB_NAME = "payment"
-	db *gorm.DB
-	err error
+	db      *gorm.DB
+	err     error
 )
 
 func ConnectPgsql() {
@@ -26,7 +26,7 @@ func ConnectPgsql() {
 		panic("failed to connect database")
 	}
 	fmt.Println("Connection Opened to Database")
-	db.AutoMigrate(&entity.User{}, &entity.Wallet{})
+	db.AutoMigrate(&entity.User{}, &entity.Wallet{}, &entity.Transaction{})
 	fmt.Println("Database Migrated")
 
 }
