@@ -1,0 +1,633 @@
+{
+	"info": {
+		"_postman_id": "4069d96d-4710-4eb5-9473-296df0d49720",
+		"name": "Payment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26479318",
+		"_collection_link": "https://warped-star-58649.postman.co/workspace/Team-Workspace~e7bddc4a-4792-4776-8a08-ff7b9f501082/collection/26479318-4069d96d-4710-4eb5-9473-296df0d49720?action=share&source=collection_link&creator=26479318"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "User Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"ariyandaTransfer\",\r\n    \"email\" : \"ariyanda1@gmail.com\",\r\n    \"password\" : \"Test@12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1.0.0/auth/users/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1.0.0",
+								"auth",
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"ariyanda@gmail.com\",\r\n    \"password\" : \"Test@12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1.0.0/auth/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1.0.0",
+								"auth",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payment",
+			"item": [
+				{
+					"name": "Payment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyaXlhbmRhQGdtYWlsLmNvbSIsImV4cCI6MTcyNDU4NzAyNSwiaWQiOiI2NGRmNGJkNS02YTIxLTQ5MTMtYjc3NS00YmVjYzQxOGFhYTEiLCJuYW1lIjoiYXJpeWFuZGEifQ.8CWFiSC6vXGCcqmpUTboQF8fgeX7YVpGSTtogo9RZLQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\" : 300000000,\r\n    \"transaction_type\" : \"transfer\",\r\n    \"destination_wallet_id\" : \"daf46721-186f-41a6-b866-411aef322235\"   \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1.0.0/payments/payment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1.0.0",
+								"payments",
+								"payment"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Top Up Succes",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"amount\" : 30000,\r\n    \"transaction_type\" : \"withdraw\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1.0.0/payments/payment",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1.0.0",
+										"payments",
+										"payment"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 25 Aug 2024 04:51:49 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "365"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"error\": \"\",\n    \"message\": \"Payment Success\",\n    \"result\": {\n        \"user_id\": \"64df4bd5-6a21-4913-b775-4becc418aaa1\",\n        \"wallet_id\": \"76fa4f6f-5df0-4cc8-baa2-6e0c02fbd5e7\",\n        \"transaction_date\": \"2024-08-25T11:51:49.5564393+07:00\",\n        \"balance_before\": 0,\n        \"amount\": 30000,\n        \"balance_after\": 30000,\n        \"transaction_type\": \"topup\",\n        \"destination_wallet_id\": \"00000000-0000-0000-0000-000000000000\"\n    }\n}"
+						},
+						{
+							"name": "Withdraw Succes",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"amount\" : 300000,\r\n    \"transaction_type\" : \"withdraw\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1.0.0/payments/payment",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1.0.0",
+										"payments",
+										"payment"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 25 Aug 2024 05:12:30 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "372"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"error\": \"\",\n    \"message\": \"Payment Success\",\n    \"result\": {\n        \"user_id\": \"64df4bd5-6a21-4913-b775-4becc418aaa1\",\n        \"wallet_id\": \"76fa4f6f-5df0-4cc8-baa2-6e0c02fbd5e7\",\n        \"transaction_date\": \"2024-08-25T12:12:29.9954537+07:00\",\n        \"balance_before\": 300300,\n        \"amount\": 300000,\n        \"balance_after\": 300,\n        \"transaction_type\": \"withdraw\",\n        \"destination_wallet_id\": \"00000000-0000-0000-0000-000000000000\"\n    }\n}"
+						},
+						{
+							"name": "Check Balance Succes",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"amount\" : 30,\r\n    \"transaction_type\" : \"check_balance\",\r\n    \"destination_wallet_id\" : \"daf46721-186f-41a6-b866-411aef322235\"   \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1.0.0/payments/payment",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1.0.0",
+										"payments",
+										"payment"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 25 Aug 2024 05:54:18 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "371"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"error\": \"\",\n    \"message\": \"Payment Success\",\n    \"result\": {\n        \"user_id\": \"64df4bd5-6a21-4913-b775-4becc418aaa1\",\n        \"wallet_id\": \"76fa4f6f-5df0-4cc8-baa2-6e0c02fbd5e7\",\n        \"transaction_date\": \"2024-08-25T12:54:18.3055675+07:00\",\n        \"balance_before\": 300240,\n        \"amount\": 30,\n        \"balance_after\": 0,\n        \"transaction_type\": \"check_balance\",\n        \"destination_wallet_id\": \"daf46721-186f-41a6-b866-411aef322235\"\n    }\n}"
+						},
+						{
+							"name": "Transfer Succes",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"amount\" : 30,\r\n    \"transaction_type\" : \"transfer\",\r\n    \"destination_wallet_id\" : \"daf46721-186f-41a6-b866-411aef322235\"   \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1.0.0/payments/payment",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1.0.0",
+										"payments",
+										"payment"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 25 Aug 2024 10:17:16 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "371"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"error\": \"\",\n    \"message\": \"Payment Success\",\n    \"result\": {\n        \"user_id\": \"64df4bd5-6a21-4913-b775-4becc418aaa1\",\n        \"wallet_id\": \"76fa4f6f-5df0-4cc8-baa2-6e0c02fbd5e7\",\n        \"transaction_date\": \"2024-08-25T17:17:16.9268412+07:00\",\n        \"balance_before\": 300240,\n        \"amount\": 30,\n        \"balance_after\": 300210,\n        \"transaction_type\": \"transfer\",\n        \"destination_wallet_id\": \"daf46721-186f-41a6-b866-411aef322235\"\n    }\n}"
+						},
+						{
+							"name": "Failed Transfer Destination Not Found",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"amount\" : 30,\r\n    \"transaction_type\" : \"transfer\",\r\n    \"destination_wallet_id\" : \"daf46721-186f-41a6-b866-411aef322223\"   \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1.0.0/payments/payment",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1.0.0",
+										"payments",
+										"payment"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 25 Aug 2024 10:18:08 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "94"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 404,\n    \"error\": \"record not found\",\n    \"message\": \"invalid destination wallet\",\n    \"result\": null\n}"
+						},
+						{
+							"name": "Failed Type Payment",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"amount\" : 30,\r\n    \"transaction_type\" : \"transfersr\",\r\n    \"destination_wallet_id\" : \"daf46721-186f-41a6-b866-411aef322235\"   \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1.0.0/payments/payment",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1.0.0",
+										"payments",
+										"payment"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 25 Aug 2024 10:18:59 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "100"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 400,\n    \"error\": \"Invalid Transaction Type\",\n    \"message\": \"Invalid Transaction Type\",\n    \"result\": null\n}"
+						},
+						{
+							"name": "Failed Withdraw Money not enough",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"amount\" : 300000000,\r\n    \"transaction_type\" : \"withdraw\",\r\n    \"destination_wallet_id\" : \"daf46721-186f-41a6-b866-411aef322235\"   \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1.0.0/payments/payment",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1.0.0",
+										"payments",
+										"payment"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 25 Aug 2024 10:19:34 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "84"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 400,\n    \"error\": \"Not enough money\",\n    \"message\": \"Not enough money\",\n    \"result\": null\n}"
+						},
+						{
+							"name": "Failed Transfer Money Not enough",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"amount\" : 300000000,\r\n    \"transaction_type\" : \"transfer\",\r\n    \"destination_wallet_id\" : \"daf46721-186f-41a6-b866-411aef322235\"   \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1.0.0/payments/payment",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1.0.0",
+										"payments",
+										"payment"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 25 Aug 2024 10:20:32 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "84"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 400,\n    \"error\": \"Not enough money\",\n    \"message\": \"Not enough money\",\n    \"result\": null\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Profil",
+			"item": [
+				{
+					"name": "Edit Photo Profil",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyaXlhbmRhQGdtYWlsLmNvbSIsImV4cCI6MTcyNDU5NDU3OCwiaWQiOiI2NGRmNGJkNS02YTIxLTQ5MTMtYjc3NS00YmVjYzQxOGFhYTEiLCJuYW1lIjoiYXJpeWFuZGEifQ.J2mtLW7uCIG7Tfsnv-hVXDtgf_yjzYwEnOeMhV4GF5k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "chunkIndex",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "totalChunks",
+									"value": "10",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "photo",
+									"type": "file",
+									"src": "/C:/Users/ariya/OneDrive/Pictures/pexels-pixabay-36717.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1.0.0/upload/photo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1.0.0",
+								"upload",
+								"photo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "MultiPayment",
+			"item": [
+				{
+					"name": "MultiPayment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyaXlhbmRhQGdtYWlsLmNvbSIsImV4cCI6MTcyNDYzMjcyMywiaWQiOiI2NGRmNGJkNS02YTIxLTQ5MTMtYjc3NS00YmVjYzQxOGFhYTEiLCJuYW1lIjoiYXJpeWFuZGEifQ.cyx1ommGsYQHYxO_IubWrrIxeEYlQtHdiqja0stHTjs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/ariya/Downloads/tableConvert.com_2ma296.csv"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1.0.0/payments/multiPayment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1.0.0",
+								"payments",
+								"multiPayment"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

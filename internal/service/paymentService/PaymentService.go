@@ -11,6 +11,7 @@ import (
 	paymentmodel "payment/internal/model/paymentModel"
 	"payment/internal/repository"
 	"payment/pkg/config"
+	"sync"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -159,4 +160,53 @@ func PaymentTransaction(request paymentmodel.PaymentRequest, c *gin.Context) (pa
 	}
 
 	return response, nil
+}
+
+// ============================================================================================================================
+// ============================================================================================================================
+
+func worker(id int, jobs <-chan paymentmodel.PaymentRequest, results chan<- paymentmodel.PaymentResponse, errChan chan<- error, wg *sync.WaitGroup, c *gin.Context) {
+	defer wg.Done()
+	for request := range jobs {
+		response, err := PaymentTransaction(request, c)
+		if err != nil {
+			errChan <- err
+			return
+		}
+		results <- response
+	}
+}
+
+func MultiPaymentService(paymentRequests []paymentmodel.PaymentRequest, c *gin.Context) ([]paymentmodel.PaymentResponse, error) {
+	var wg sync.WaitGroup
+	jobs := make(chan paymentmodel.PaymentRequest, len(paymentRequests))
+	results := make(chan paymentmodel.PaymentResponse, len(paymentRequests))
+	errChan := make(chan error, 1)
+
+	// Start 5 workers
+	numWorkers := 5
+	for w := 0; w < numWorkers; w++ {
+		wg.Add(1)
+		go worker(w, jobs, results, errChan, &wg, c)
+	}
+	go func() {
+		for _, request := range paymentRequests {
+			jobs <- request
+		}
+		close(jobs)
+	}()
+
+	wg.Wait()
+	close(results)
+	var paymentResponses []paymentmodel.PaymentResponse
+	for response := range results {
+		paymentResponses = append(paymentResponses, response)
+	}
+	select {
+	case err := <-errChan:
+		return nil, err
+	default:
+	}
+
+	return paymentResponses, nil
 }
