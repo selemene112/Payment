@@ -2,6 +2,7 @@ package rest
 
 import (
 	"payment/internal/controller"
+	"payment/internal/middleware"
 
 	"github.com/gin-gonic/gin"
 )
@@ -21,6 +22,11 @@ func StartApp() *gin.Engine {
 
 			AuthUsersRoute.POST("/register", controller.RegisterUserController)
 			AuthUsersRoute.POST("/login", controller.LoginUserController)
+		}
+
+		PaymentsRoute := defaultRoute.Group("/payments")
+		{
+			PaymentsRoute.POST("/payment", middleware.VerifyAndNext, controller.PaymentgController)
 		}
 	}
 
